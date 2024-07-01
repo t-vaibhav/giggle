@@ -12,7 +12,6 @@ export default {
             img: "/03.gif",
             alt: "funny",
         },
-        // Continue adding entries till 46.gif
         {
             img: "/04.gif",
             alt: "happy",
@@ -25,10 +24,13 @@ export default {
             img: "/06.gif",
             alt: "sad",
         },
-
         {
-            img: "/38.gif",
-            alt: "calm",
+            img: "/06.gif",
+            alt: "sad",
+        },
+        {
+            img: "/06.gif",
+            alt: "sad",
         },
     ],
 

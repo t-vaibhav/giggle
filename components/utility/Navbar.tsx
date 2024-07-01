@@ -12,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import LoginButton from "./LoginButton";
 
 export default function Navbar() {
     // const view = <div className="w-[200px]"></div>;
@@ -265,18 +266,19 @@ export default function Navbar() {
                     }}
                 />
 
-                <Link
+                {/* <Link
                     className="btn text-black rounded-full px-3 py-2 border border- shadow-sm"
                     href="/sign-in"
                 >
                     Sign In
-                </Link>
-                <Link
+                </Link> */}
+                <LoginButton />
+                {/* <Link
                     className="btn bg-primary text-primary-foreground  rounded-full px-3 py-2 hover:bg-primary/90 shadow-md"
                     href="/sign-up"
                 >
                     Sign Up
-                </Link>
+                </Link> */}
 
                 {/* side notification bar */}
                 {notification}
