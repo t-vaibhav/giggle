@@ -1,4 +1,4 @@
-export default {
+const data = {
     gifs: [
         {
             img: "/01.gif",
@@ -99,3 +99,4 @@ export default {
         },
     ],
 };
+export default data;
