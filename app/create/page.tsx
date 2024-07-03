@@ -145,7 +145,7 @@ export default function Home() {
             return res.url;
         }
     };
-    return !loading ? (
+    return loading ? (
         <div className="h-screen w-screen relative">
             <div className="h-full w-full h- flex items-center justify-center bg-black/40 flex-col">
                 <Spinner size="16" />
