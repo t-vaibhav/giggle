@@ -11,7 +11,7 @@ export const mediaType = pgEnum("media_type", ["image", "video"]);
 
 export const media = pgTable("media", {
     id: serial("id").primaryKey(),
-    type: mediaType("type").notNull(),
+    type: text("type").notNull(),
     url: text("url").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
         .notNull()

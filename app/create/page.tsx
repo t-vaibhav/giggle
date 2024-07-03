@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
 import { Progress } from "@/components/ui/progress";
 import { SingleImageDropzone } from "@/components/utility/SingleImageDropzone";
+import Spinner from "@/components/utility/Spinner";
 
 const allowedFileTypes = [
     "image/jpeg",
@@ -66,12 +67,14 @@ const formSchema = z.object({
 });
 
 export default function Home() {
-    const [file, setFile] = useState<File>();
+    const [file, setFile] = useState<File | undefined>(undefined);
     const [val, setVal] = useState(0);
     const { edgestore } = useEdgeStore();
     const session = useSession();
-    const [fileUrl, setFileUrl] = useState(null);
+    const [fileUrl, setFileUrl] = useState("");
     const [fileType, setFileType] = useState("");
+    const [loading, setLoading] = useState<boolean>(false);
+    const [mediaLoading, setMediaLoading] = useState<boolean>(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -83,23 +86,49 @@ export default function Home() {
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const medialink = await handleUpload();
-        console.log("link", medialink);
-        const postData = {
-            userId: session.data?.user.id,
-            content: values.content,
-            tags: values.tags ? values.tags.split(",") : [],
+        setLoading(true);
+        const mediaLink = await handleUpload();
+        console.log("link", mediaLink);
+        const mediaData = {
+            type: fileType,
+            url: mediaLink,
         };
-        const response = await fetch("/api/add-post", {
+        const mediaResponse = await fetch("/api/add-media", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(postData),
+            body: JSON.stringify(mediaData),
         });
-        const result = await response.json();
-        console.log(result);
-        console.log("Create new post", values);
+
+        if (mediaResponse.status === 200) {
+            const m = await mediaResponse.json();
+            const postData = {
+                mediaId: m.id,
+                userId: session.data?.user.id,
+                content: values.content,
+                tags: values.tags ? values.tags.split(",") : [],
+            };
+            const response = await fetch("/api/add-post", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(postData),
+            });
+            const result = await response.json();
+            console.log(result);
+            console.log("Create new post", values);
+
+            // Reset the file input and clear form values
+            setFile(undefined);
+            setFileUrl("");
+            setFileType("");
+            form.reset(); // Assuming you're using `react-hook-form`
+        } else {
+            alert("Error in uploading media");
+        }
+        setLoading(false);
     }
 
     const handleUpload = async () => {
@@ -116,15 +145,24 @@ export default function Home() {
             return res.url;
         }
     };
-    return (
-        <div className="space-y-3  mt-16 pt-16 max-w-screen-lg mx-auto gap-10 ">
+    return !loading ? (
+        <div className="h-screen w-screen relative">
+            <div className="h-full w-full h- flex items-center justify-center bg-black/40 flex-col">
+                <Spinner size="16" />
+                <h6 className="text-3xl text-white mt-4 font-semibold">
+                    Creating your post...
+                </h6>
+            </div>
+        </div>
+    ) : (
+        <div className="space-y-3 mt-16 pt-16 max-w-screen-lg mx-auto gap-10">
             <div className="w-full">
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className="space-y-8 flex justify-between gap-10"
                     >
-                        <div className="w-full ">
+                        <div className="w-full">
                             <FormField
                                 name="requestFiles"
                                 control={form.control}
@@ -137,6 +175,7 @@ export default function Home() {
                                                     type="file"
                                                     className="border-slate-300 hidden"
                                                     onChange={(e) => {
+                                                        setMediaLoading(true);
                                                         const filesArray =
                                                             Array.from(
                                                                 e.target
@@ -159,6 +198,7 @@ export default function Home() {
                                                                 selectedFile.type
                                                             );
                                                         }
+                                                        setMediaLoading(false);
                                                     }}
                                                     id="upload"
                                                 />
@@ -167,7 +207,9 @@ export default function Home() {
                                                     className="col-span-4"
                                                 >
                                                     <div className="w-full h-[400px] bg-[#e8e9e8] flex items-center justify-center rounded-3xl border-2 border-gray-400 border-dashed cursor-pointer">
-                                                        {fileUrl ? (
+                                                        {mediaLoading ? (
+                                                            <Spinner />
+                                                        ) : fileUrl ? (
                                                             fileType.startsWith(
                                                                 "image/"
                                                             ) ? (
@@ -257,7 +299,7 @@ export default function Home() {
                                             />
                                         </FormControl>
                                         <FormDescription>
-                                            Enter the description for you post
+                                            Enter the description for your post
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
