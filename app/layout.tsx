@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/utility/Navbar";
 import SessionWrapper from "./SessionWrapper";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,10 @@ export default function RootLayout({
         <html lang="en">
             <SessionWrapper>
                 <body className={inter.className}>
-                    <Navbar />
-                    {children}
+                    <EdgeStoreProvider>
+                        <Navbar />
+                        {children}
+                    </EdgeStoreProvider>
                 </body>
             </SessionWrapper>
         </html>

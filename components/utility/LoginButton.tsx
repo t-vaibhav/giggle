@@ -14,9 +14,6 @@ import Link from "next/link";
 export default function LoginButton() {
     const { data: session } = useSession() as { data: Session | null };
 
-    useEffect(() => {
-        console.log(session);
-    }, [session]);
     if (session) {
         return (
             <>

@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/layout.jsx", "app/api/auth/[...nextauth]/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/layout.jsx", "app/api/auth/[...nextauth]/route.js", "utils/authOptions.js", "drizzle.config.js", "app/test/page.js", "db/query/query.js"],
   "exclude": ["node_modules"]
 }

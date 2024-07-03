@@ -25,7 +25,8 @@ export default function Navbar() {
                 return view;
             }
         });
-    }
+    }  
+    
 
     const notification = (
         <div
