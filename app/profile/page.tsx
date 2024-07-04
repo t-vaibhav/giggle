@@ -3,7 +3,7 @@ import Navbar from "@/components/utility/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import { View } from "lucide-react";
-import HomepageGifs from "@/components/utility/HomepageGifs";
+import HomepageGifs from "@/components/utility/Templates";
 import data from "@/components/utility/data";
 import ProfileGifs from "@/components/utility/ProfileGifs";
 import SavedGifs from "@/components/utility/SavedGifs";
@@ -37,16 +37,16 @@ export default function Home() {
                     @bewakoof_paipup
                 </h6>
                 <h5 className="text-foreground text-base">
-                    36 Followers | 20 Following
+                    36 Posts | 20 Likes
                 </h5>
-                <div className="space-x-4 pt-3">
+                {/* <div className="space-x-4 pt-3">
                     <button className="py-1 px-3 rounded-3xl bg-muted border text-black text-base ">
                         Edit Profile
                     </button>
                     <button className="py-1 px-3 rounded-3xl bg-muted border text-black text-base ">
                         Share
                     </button>
-                </div>
+                </div> */}
                 <div className="flex justify-center pt-8">
                     <nav>
                         <ul className="flex space-x-10 cursor-pointer">

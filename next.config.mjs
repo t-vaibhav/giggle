@@ -4,6 +4,12 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
+                hostname: "files.edgestore.dev",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
                 hostname: "github.com",
                 port: "",
                 pathname: "/*",

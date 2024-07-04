@@ -1,15 +1,43 @@
-import Navbar from "@/components/utility/Navbar";
-import HomepageGifs from "@/components/utility/HomepageGifs";
-import Image from "next/image";
+"use client";
 import data from "@/components/utility/data";
-import AuthOptions from "@/components/utility/AuthOptions";
-export default function Home() {
-    const gifs = data.gifs.map((item, index) => {
-        return <HomepageGifs img={item.img} alt={item.alt} key={index} />;
-    });
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import Templates from "@/components/utility/Templates";
+import React from "react";
+
+const Home: React.FC = () => {
+    const [posts, setPosts] = useState<any[]>([]);
+
+    async function getData() {
+        try {
+            const response = await fetch("/api/get-posts", {
+                method: "GET",
+            });
+            if (response.ok) {
+                const posts = await response.json();
+                setPosts(posts);
+            } else {
+                console.error("Failed to fetch posts");
+            }
+        } catch (error) {
+            console.error("An error occurred while fetching posts", error);
+        }
+    }
+
+    useEffect(() => {
+        getData();
+    }, []);
+
     return (
-        <main className="pt-16">
-            <div className="columns-6 gap-3 space-y-3 mx-10 mt-5 ">{gifs}</div>
+        <main className="pt-20 mx-10 bg-white">
+            <div className="grid grid-cols-3 gap-10">
+                {posts.map((post, index) => (
+                    <Templates key={index} parameter={post} />
+                ))}
+            </div>
+            <Button onClick={getData}>Get Data</Button>
         </main>
     );
-}
+};
+
+export default Home;
