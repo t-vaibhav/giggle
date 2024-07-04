@@ -1,5 +1,5 @@
 import { and, db, eq, count } from "@/db";
-import { likes as likesTable } from "@/db/schema/likes";
+import { saved as savedTable } from "@/db/schema/saved";
 
 export async function POST(request: Request) {
     const data = await request.json();
@@ -7,9 +7,9 @@ export async function POST(request: Request) {
 
     const response = await db
         .select({ count: count() })
-        .from(likesTable)
+        .from(savedTable)
         .where(
-            and(eq(likesTable.userId, userId), eq(likesTable.postId, postId))
+            and(eq(savedTable.userId, userId), eq(savedTable.postId, postId))
         );
     console.log("count is: ", response[0].count);
 

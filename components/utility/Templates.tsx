@@ -25,6 +25,7 @@ const Templates = ({ parameter }: any) => {
             body: JSON.stringify(likeData),
         });
         const result = await response.json();
+        return result;
     }
 
     async function uploadLike() {
@@ -44,7 +45,44 @@ const Templates = ({ parameter }: any) => {
         console.log("likedResult: ", result);
         if (likeResponse.status === 200) {
             const likesFlag = await fetchLikeStatus();
-            console.log(likesFlag);
+            setLiked(likesFlag.count);
+        }
+    }
+
+    async function fetchSaveStatus() {
+        const saveData = {
+            userId: session?.user?.id,
+            postId: parameter.posts.id,
+        };
+        const response = await fetch("/api/save-status", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(saveData),
+        });
+        const result = await response.json();
+        return result;
+    }
+
+    async function uploadSave() {
+        const saveData = {
+            userId: session?.user?.id,
+            postId: parameter.posts.id,
+        };
+        const endpoint = saved ? "/api/unsave-post" : "/api/save-post";
+        const saveResponse = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(saveData),
+        });
+        const result = await saveResponse.json();
+        console.log("savedResult: ", result);
+        if (saveResponse.status === 200) {
+            const saveFlag = await fetchSaveStatus();
+            setSaved(saveFlag.count);
         }
     }
 
@@ -53,13 +91,23 @@ const Templates = ({ parameter }: any) => {
         uploadLike();
     };
 
-    useEffect(() => {
-        const fetchLikeStatusAsync = async () => {
-            const result = await fetchLikeStatus();
-        };
+    const handleSave = () => {
+        setSaved(!saved);
+        uploadSave();
+    };
 
-        fetchLikeStatusAsync();
-    }, [liked]);
+    useEffect(() => {
+        if (session?.user) {
+            (async () => {
+                const likesFlag = await fetchLikeStatus();
+                console.log(likesFlag.count);
+                setLiked(likesFlag.count);
+                const saveFlag = await fetchSaveStatus();
+                console.log(saveFlag.count);
+                setSaved(saveFlag.count);
+            })();
+        }
+    }, [session?.user]);
 
     const typeOfMedia = parameter.media.type.startsWith("image/")
         ? "image"
@@ -118,14 +166,12 @@ const Templates = ({ parameter }: any) => {
                             {saved ? (
                                 <Button
                                     variant={"outline"}
-                                    onClick={() => setSaved(!saved)}
+                                    onClick={handleSave}
                                 >
                                     Saved
                                 </Button>
                             ) : (
-                                <Button onClick={() => setSaved(!saved)}>
-                                    Save
-                                </Button>
+                                <Button onClick={handleSave}>Save</Button>
                             )}
 
                             <Heart
