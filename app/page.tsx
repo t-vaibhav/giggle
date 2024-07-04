@@ -29,7 +29,7 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <main className="pt-20 mx-10 bg-white">
+        <main className="pt-20 mx-11 bg-white">
             <div className="grid grid-cols-3 gap-10">
                 {posts.map((post, index) => (
                     <Templates key={index} parameter={post} />
