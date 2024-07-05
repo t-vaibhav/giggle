@@ -25,8 +25,7 @@ export default function Navbar() {
                 return view;
             }
         });
-    }  
-    
+    }
 
     const notification = (
         <div
@@ -216,7 +215,7 @@ export default function Navbar() {
                         src={"/gg.png"}
                         height={45}
                         width={45}
-                        alt="Giphers"
+                        alt="Giggle!"
                         className="rounded-full hover:scale-110 hover:shadow-md hover:"
                     />
                 </Link>
