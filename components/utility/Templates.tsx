@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Divide, Heart } from "lucide-react";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import data from "./data";
 
 const Templates = ({ parameter }: any) => {
+    const [loading, setLoading] = useState(true);
     const [hover, setHover] = useState(false);
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
     const { data: session } = useSession();
+    const blurDataURL =
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBAWpEwv0AAAAASUVORK5CYII=";
 
     async function fetchLikeStatus() {
         const likeData = {
@@ -100,11 +103,10 @@ const Templates = ({ parameter }: any) => {
         if (session?.user) {
             (async () => {
                 const likesFlag = await fetchLikeStatus();
-                console.log(likesFlag.count);
                 setLiked(likesFlag.count);
                 const saveFlag = await fetchSaveStatus();
-                console.log(saveFlag.count);
                 setSaved(saveFlag.count);
+                setLoading(false);
             })();
         }
     }, [session?.user]);
@@ -120,23 +122,32 @@ const Templates = ({ parameter }: any) => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
-                {typeOfMedia === "image" ? (
-                    <Image
-                        src={parameter.media.url || "/07.gif"}
-                        alt="media"
-                        height={500}
-                        width={300}
-                        className="rounded-xl"
-                    />
+                {loading ? (
+                    <div className="h-full w-full animate-pulse"></div>
                 ) : (
-                    <video
-                        src={parameter.media.url || "/07.gif"}
-                        height={500}
-                        width={300}
-                        className="rounded-xl"
-                        controls
-                    />
+                    <>
+                        {typeOfMedia === "image" ? (
+                            <Image
+                                src={parameter.media.url || "/07.gif"}
+                                alt="media"
+                                height={500}
+                                width={300}
+                                className="rounded-xl"
+                                placeholder="blur"
+                                blurDataURL={blurDataURL}
+                            />
+                        ) : (
+                            <video
+                                src={parameter.media.url || "/07.gif"}
+                                height={500}
+                                width={300}
+                                className="rounded-xl"
+                                autoPlay
+                            />
+                        )}
+                    </>
                 )}
+
                 <div
                     className={`${
                         hover ? "bg-black/60" : "hidden"
@@ -147,16 +158,17 @@ const Templates = ({ parameter }: any) => {
                             <p>
                                 by{" "}
                                 <span className="hover:underline duration-100 cursor-pointer underline-offset-1">
-                                    t-vaibhav
+                                    {parameter.user.name}
                                 </span>
                             </p>
                             <Link href={"/profile"}>
                                 <Image
                                     height={40}
                                     width={40}
-                                    src={"https://github.com/shadcn.png"}
+                                    src={parameter.user.image}
                                     alt="user"
                                     className="rounded-full h-8 w-8 border"
+                                    loading="lazy"
                                 />
                             </Link>
                         </div>
