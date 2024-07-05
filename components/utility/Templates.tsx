@@ -5,6 +5,7 @@ import { Divide, Heart } from "lucide-react";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import data from "./data";
+import { useRouter } from "next/navigation";
 
 const Templates = ({ parameter }: any) => {
     const [loading, setLoading] = useState(true);
@@ -12,6 +13,7 @@ const Templates = ({ parameter }: any) => {
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
     const { data: session } = useSession();
+    const router = useRouter();
     const blurDataURL =
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBAWpEwv0AAAAASUVORK5CYII=";
 
@@ -151,46 +153,80 @@ const Templates = ({ parameter }: any) => {
                 <div
                     className={`${
                         hover ? "bg-black/60" : "hidden"
-                    } h-full w-full absolute duration-100 ease-in-out overflow-clip flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2`}
+                    } h-full w-full absolute duration-100 ease-in-out overflow-clip flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
+                    onClick={() =>
+                        router.push(`/post/${parameter.posts?.id}` || "/")
+                    }
                 >
-                    <div className="flex justify-end">
+                    <div
+                        className="flex justify-end z-10 w-full"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <div className="flex gap-2 text-white items-center">
                             <p>
                                 by{" "}
-                                <span className="hover:underline duration-100 cursor-pointer underline-offset-1">
-                                    {parameter.user.name}
+                                <span className="hover:underline duration-100 cursor-pointer underline-offset-1 z-10">
+                                    <Link
+                                        href={`/${parameter.user?.name}` || "/"}
+                                        target="_blank"
+                                    >
+                                        {parameter.user.name}
+                                    </Link>
                                 </span>
                             </p>
-                            <Link href={"/profile"}>
-                                <Image
-                                    height={40}
-                                    width={40}
-                                    src={parameter.user.image}
-                                    alt="user"
-                                    className="rounded-full h-8 w-8 border"
-                                    loading="lazy"
-                                />
-                            </Link>
+                            <div className="z-10">
+                                <Link
+                                    href={`/${parameter.user?.name}` || "/"}
+                                    target="_blank"
+                                >
+                                    <Image
+                                        height={40}
+                                        width={40}
+                                        src={parameter.user.image}
+                                        alt="user"
+                                        className="rounded-full h-8 w-8 border"
+                                        loading="lazy"
+                                    />
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex justify-end">
+                    <div className="h-full w-full flex-grow">
+                        {/* This space is now clickable */}
+                    </div>
+                    <div
+                        className="flex justify-end"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <div className="flex gap-2 text-red-600 items-center justify-between w-full">
                             {saved ? (
                                 <Button
                                     variant={"outline"}
-                                    onClick={handleSave}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleSave();
+                                    }}
                                 >
                                     Saved
                                 </Button>
                             ) : (
-                                <Button onClick={handleSave}>Save</Button>
+                                <Button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleSave();
+                                    }}
+                                >
+                                    Save
+                                </Button>
                             )}
-
                             <Heart
                                 className={`${
                                     liked ? "fill-red-500" : ""
                                 } duration-150 cursor-pointer`}
-                                onClick={handleLikes}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleLikes();
+                                }}
                             />
                         </div>
                     </div>

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Profile from "@/components/utility/Profile";
 import LoadingScreen from "@/components/utility/LoadingScreen";
+import { useSession } from "next-auth/react";
+import Profile1 from "@/components/utility/Profile1";
 
 export default function Page({ params }: { params: { user: string } }) {
     const username = params.user; // Extracts the username from the URL
@@ -10,7 +12,7 @@ export default function Page({ params }: { params: { user: string } }) {
     const [found, setFound] = useState(false);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-
+    const session = useSession();
     useEffect(() => {
         if (!username) {
             router.push("/");
@@ -49,12 +51,16 @@ export default function Page({ params }: { params: { user: string } }) {
             {loading ? (
                 <LoadingScreen />
             ) : (
-                found && (
+                found &&
+                (session.data?.user.name === username ? (
                     <div className="pt-24">
                         <Profile userData={userData} />
-                        {/* {JSON.stringify(userData)} */}
                     </div>
-                )
+                ) : (
+                    <div className="pt-24">
+                        <Profile1 userData={userData} />
+                    </div>
+                ))
             )}
         </>
     );

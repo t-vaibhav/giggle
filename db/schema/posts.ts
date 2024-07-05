@@ -16,6 +16,7 @@ export const posts = pgTable("posts", {
         .notNull()
         .references(() => users.id),
     mediaId: integer("media_id").references(() => media.id),
+    title: text("title").notNull(),
     content: text("content").notNull(),
     tags: text("tags").array(),
     createdAt: timestamp("created_at", { withTimezone: true })

@@ -110,6 +110,7 @@ export default function Home() {
             const postData = {
                 mediaId: m.id,
                 userId: session.data?.user.id,
+                title: values.title,
                 content: values.content,
                 tags: values.tags ? values.tags.split(",") : [],
             };

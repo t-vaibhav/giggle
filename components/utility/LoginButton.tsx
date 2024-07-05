@@ -23,7 +23,10 @@ export default function LoginButton() {
                             <Image
                                 height={40}
                                 width={40}
-                                src={"https://github.com/shadcn.png"}
+                                src={
+                                    session?.user.image ||
+                                    "https://github.com/shadcn.png"
+                                }
                                 alt="user"
                                 className="rounded-full h-10 w-10 border"
                             />
@@ -32,13 +35,16 @@ export default function LoginButton() {
                     <PopoverContent className="p-0 w-fit" align="end">
                         <div className="p-3 border shadow-lg rounded-md inline-block space-y-4 min-w-60">
                             <div>
-                                <Link href={"/profile"}>
+                                <Link href={`/${session.user?.name}` || "/"}>
                                     <div className="flex items-center space-x-3 ">
                                         <div>
                                             <Image
                                                 height={32}
                                                 width={32}
-                                                src={"/dog.jpg "}
+                                                src={
+                                                    session?.user.image ||
+                                                    "https://github.com/shadcn.png"
+                                                }
                                                 alt="user"
                                                 className="rounded-full h-8 w-8 border"
                                             />
