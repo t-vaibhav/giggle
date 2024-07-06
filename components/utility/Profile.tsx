@@ -1,12 +1,6 @@
 "use client";
-import Navbar from "@/components/utility/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
-import { View } from "lucide-react";
-import HomepageGifs from "@/components/utility/Templates";
-import data from "@/components/utility/data";
-import ProfileGifs from "@/components/utility/ProfileGifs";
-import SavedGifs from "@/components/utility/SavedGifs";
 import Templates from "@/components/utility/Templates";
 
 export default function Profile({ userData }: any) {
@@ -19,7 +13,7 @@ export default function Profile({ userData }: any) {
     const created = userData.profileData.map((item: any, index: any) => {
         return <Templates key={index} parameter={item} />;
     });
-    console.log(userData.savedPosts);
+    console.log("profile ke andr saved: ", userData.savedPosts);
     const saved = userData.savedPosts.map((item: any, index: any) => {
         return <Templates key={index} parameter={item} />;
     });
