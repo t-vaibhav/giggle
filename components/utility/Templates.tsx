@@ -1,11 +1,12 @@
-
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Divide, Heart } from "lucide-react";
 import { Button } from "../ui/button";
 import data from "./data";
 import { useSession } from "next-auth/react";
+import ImageLoadingSkeleton from "./ImageLoadingSkeleton";
 
 const Templates = ({ parameter }: any) => {
     const [loading, setLoading] = useState(true);
@@ -117,119 +118,126 @@ const Templates = ({ parameter }: any) => {
         : "video";
 
     return (
-        <div className="h-full">
-            <div
-                className="relative"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-            >
-                {loading ? (
-                    <div className="h-full w-full animate-pulse"></div>
-                ) : (
-                    <>
-                        {typeOfMedia === "image" ? (
-                            <Image
-                                src={parameter.media.url || "/07.gif"}
-                                alt="media"
-                                height={500}
-                                width={300}
-                                className="rounded-xl"
-                                placeholder="blur"
-                                blurDataURL={blurDataURL}
-                            />
-                        ) : (
-                            <video
-                                src={parameter.media.url || "/07.gif"}
-                                height={500}
-                                width={300}
-                                className="rounded-xl"
-                                autoPlay
-                            />
-                        )}
-                    </>
-                )}
-
+        <Suspense fallback={<ImageLoadingSkeleton />}>
+            <div className="h-full">
                 <div
-                    className={`${hover ? "bg-black/60" : "hidden"
-                        } h-full w-full absolute duration-100 ease-in-out overflow-clip flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
-                    onClick={() =>
-                        window.open(`/post/${parameter.posts?.id}` || "/")
-                    }
+                    className="relative"
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
                 >
+                    {loading ? (
+                        <div className="h-full w-full animate-pulse"></div>
+                    ) : (
+                        <>
+                            {typeOfMedia === "image" ? (
+                                <Image
+                                    src={parameter.media.url || "/07.gif"}
+                                    alt="media"
+                                    height={500}
+                                    width={300}
+                                    className="rounded-xl"
+                                    placeholder="blur"
+                                    blurDataURL={blurDataURL}
+                                />
+                            ) : (
+                                <video
+                                    src={parameter.media.url || "/07.gif"}
+                                    height={500}
+                                    width={300}
+                                    className="rounded-xl"
+                                    autoPlay
+                                />
+                            )}
+                        </>
+                    )}
+
                     <div
-                        className="flex justify-end z-10 w-full"
-                        onClick={(e) => e.stopPropagation()}
+                        className={`${
+                            hover ? "bg-black/60" : "hidden"
+                        } h-full w-full absolute duration-100 ease-in-out overflow-clip flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
+                        onClick={() =>
+                            window.open(`/post/${parameter.posts?.id}` || "/")
+                        }
                     >
-                        <div className="flex gap-2 text-white items-center">
-                            <p>
-                                by{" "}
-                                <span className="hover:underline duration-100 cursor-pointer underline-offset-1 z-10">
+                        <div
+                            className="flex justify-end z-10 w-full"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="flex gap-2 text-white items-center">
+                                <p>
+                                    by{" "}
+                                    <span className="hover:underline duration-100 cursor-pointer underline-offset-1 z-10">
+                                        <Link
+                                            href={
+                                                `/${parameter.user?.name}` ||
+                                                "/"
+                                            }
+                                            target="_blank"
+                                        >
+                                            {parameter.user.name}
+                                        </Link>
+                                    </span>
+                                </p>
+                                <div className="z-10">
                                     <Link
                                         href={`/${parameter.user?.name}` || "/"}
                                         target="_blank"
                                     >
-                                        {parameter.user.name}
+                                        <Image
+                                            height={40}
+                                            width={40}
+                                            src={parameter.user.image}
+                                            alt="user"
+                                            className="rounded-full h-8 w-8 border"
+                                            loading="lazy"
+                                        />
                                     </Link>
-                                </span>
-                            </p>
-                            <div className="z-10">
-                                <Link
-                                    href={`/${parameter.user?.name}` || "/"}
-                                    target="_blank"
-                                >
-                                    <Image
-                                        height={40}
-                                        width={40}
-                                        src={parameter.user.image}
-                                        alt="user"
-                                        className="rounded-full h-8 w-8 border"
-                                        loading="lazy"
-                                    />
-                                </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="h-full w-full flex-grow">
-                        {/* This space is now clickable */}
-                    </div>
-                    <div
-                        className="flex justify-end"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="flex gap-2 text-red-600 items-center justify-between w-full">
-                            {saved ? (
-                                <Button
-                                    variant={"outline"}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleSave();
-                                    }}
-                                >
-                                    Saved
-                                </Button>
-                            ) : (
-                                <Button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleSave();
-                                    }}
-                                >
-                                    Save
-                                </Button>
-                            )}
-                            <Heart
-                                className={`${liked ? "fill-red-500" : ""
+                        <div className="h-full w-full flex-grow">
+                            {/* This space is now clickable */}
+                        </div>
+                        <div
+                            className="flex justify-end"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="flex gap-2 text-red-600 items-center justify-between w-full">
+                                {saved ? (
+                                    <Button
+                                        variant={"outline"}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleSave();
+                                        }}
+                                    >
+                                        Saved
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleSave();
+                                        }}
+                                    >
+                                        Save
+                                    </Button>
+                                )}
+                                <Heart
+                                    className={`${
+                                        liked ? "fill-red-500" : ""
                                     } duration-150 cursor-pointer`}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleLikes();
-                                }}
-                            />
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleLikes();
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Suspense>
     );
 };
 

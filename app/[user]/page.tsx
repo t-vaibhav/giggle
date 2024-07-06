@@ -5,6 +5,7 @@ import Profile from "@/components/utility/Profile";
 import LoadingScreen from "@/components/utility/LoadingScreen";
 import { useSession } from "next-auth/react";
 import Profile1 from "@/components/utility/Profile1";
+import { getUserData } from "../action";
 
 export default function Page({ params }: { params: { user: string } }) {
     const username = params.user; // Extracts the username from the URL
@@ -13,6 +14,7 @@ export default function Page({ params }: { params: { user: string } }) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const session = useSession();
+    const userData2 = getUserData({ username: params.user });
     useEffect(() => {
         if (!username) {
             router.push("/");
@@ -46,6 +48,9 @@ export default function Page({ params }: { params: { user: string } }) {
         fetchData();
     }, [username, router]);
 
+    console.log("username: ", username);
+    console.log("userdat1: ", userData);
+    console.log("userdat2: ", userData2);
     return (
         <>
             {loading ? (
