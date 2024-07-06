@@ -9,7 +9,7 @@ export default async function Home() {
         <main className="pt-20 bg-white">
             <div className="columns-6 gap-3 space-y-3 mx-10 mt-5">
                 {posts.map((post, index) => (
-                    <Suspense fallback={<ImageLoadingSkeleton />}>
+                    <Suspense fallback={<ImageLoadingSkeleton />} key={index}>
                         <Templates key={index} parameter={post} />
                     </Suspense>
                 ))}
