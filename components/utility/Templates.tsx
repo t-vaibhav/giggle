@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -149,9 +150,8 @@ const Templates = ({ parameter }: any) => {
                 )}
 
                 <div
-                    className={`${
-                        hover ? "bg-black/60" : "hidden"
-                    } h-full w-full absolute duration-100 ease-in-out overflow-clip flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
+                    className={`${hover ? "bg-black/60" : "hidden"
+                        } h-full w-full absolute duration-100 ease-in-out overflow-clip flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
                     onClick={() =>
                         window.open(`/post/${parameter.posts?.id}` || "/")
                     }
@@ -218,9 +218,8 @@ const Templates = ({ parameter }: any) => {
                                 </Button>
                             )}
                             <Heart
-                                className={`${
-                                    liked ? "fill-red-500" : ""
-                                } duration-150 cursor-pointer`}
+                                className={`${liked ? "fill-red-500" : ""
+                                    } duration-150 cursor-pointer`}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     handleLikes();
