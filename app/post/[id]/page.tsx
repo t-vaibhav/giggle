@@ -40,5 +40,6 @@ export default function Page({ params }: { params: { id: string } }) {
         fetchData();
     }, [postId, router]);
     console.log(data);
+
     return <>{loading ? <LoadingScreen /> : <PostContent data={data} />}</>;
 }

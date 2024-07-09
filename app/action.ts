@@ -1,4 +1,4 @@
-import { db, eq, and } from "@/db";
+import { db, eq, and, arrayOverlaps } from "@/db";
 import { posts as postsTable } from "@/db/schema/posts";
 import { users as usersTable } from "@/db/schema/users";
 import { media as mediaTable } from "@/db/schema/media";
@@ -36,6 +36,20 @@ export async function getSavedPosts({ id }: { id: string }) {
         .innerJoin(usersTable, eq(usersTable.id, postsTable.userId))
         .where(eq(postsTable.id, savedTable.postId));
 
+    return result;
+}
+
+export async function testing(query: string) {
+    const queryArray = query
+        ? query.split(" ").map((tag) => tag.trim().toLowerCase())
+        : [];
+    console.log(queryArray);
+    const result = await db
+        .select()
+        .from(postsTable)
+        .where(arrayOverlaps(postsTable.tags, queryArray || ["security"]))
+        .innerJoin(mediaTable, eq(mediaTable.id, postsTable.mediaId))
+        .innerJoin(usersTable, eq(usersTable.id, postsTable.userId));
     return result;
 }
 

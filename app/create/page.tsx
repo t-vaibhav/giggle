@@ -112,7 +112,11 @@ export default function Home() {
                 userId: session.data?.user.id,
                 title: values.title,
                 content: values.content,
-                tags: values.tags ? values.tags.split(",") : [],
+                tags: values.tags
+                    ? values.tags
+                          .split(",")
+                          .map((tag) => tag.trim().toLowerCase())
+                    : [],
             };
             const response = await fetch("/api/add-post", {
                 method: "POST",

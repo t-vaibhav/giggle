@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// RootLayout.tsx
+import ClientRootLayout from "@/components/utility/ClientRootLayout";
 import "./globals.css";
-import Navbar from "@/components/utility/Navbar";
-import SessionWrapper from "./SessionWrapper";
-import { EdgeStoreProvider } from "@/lib/edgestore";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Giggle!",
@@ -19,14 +15,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <SessionWrapper>
-                <body className={inter.className}>
-                    <EdgeStoreProvider>
-                        <Navbar />
-                        {children}
-                    </EdgeStoreProvider>
-                </body>
-            </SessionWrapper>
+            <body>
+                <ClientRootLayout>{children}</ClientRootLayout>
+            </body>
         </html>
     );
 }

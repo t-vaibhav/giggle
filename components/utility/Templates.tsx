@@ -7,7 +7,8 @@ import { Button } from "../ui/button";
 import data from "./data";
 import { useSession } from "next-auth/react";
 import ImageLoadingSkeleton from "./ImageLoadingSkeleton";
-
+import DownloadButton from "./DownloadButton";
+import extractFileExtension from "@/utils/extractFileExtension";
 const Templates = ({ parameter }: any) => {
     const [loading, setLoading] = useState(true);
     const [hover, setHover] = useState(false);
@@ -116,7 +117,9 @@ const Templates = ({ parameter }: any) => {
     const typeOfMedia = parameter.media.type.startsWith("image/")
         ? "image"
         : "video";
-
+    console.log(parameter);
+    let fileName = "giggle_file.";
+    fileName += extractFileExtension(parameter?.media.url);
     return (
         <Suspense fallback={<ImageLoadingSkeleton />}>
             <div className="h-full">
@@ -154,7 +157,7 @@ const Templates = ({ parameter }: any) => {
                     <div
                         className={`${
                             hover ? "bg-black/60" : "hidden"
-                        } h-full w-full absolute duration-100 ease-in-out overflow-clip flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
+                        } h-full w-full absolute duration-100 ease-in-out overflow flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
                         onClick={() =>
                             window.open(`/post/${parameter.posts?.id}` || "/")
                         }
@@ -195,43 +198,54 @@ const Templates = ({ parameter }: any) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="h-full w-full flex-grow">
-                            {/* This space is now clickable */}
-                        </div>
+
                         <div
                             className="flex justify-end"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="flex gap-2 text-red-600 items-center justify-between w-full">
-                                {saved ? (
-                                    <Button
-                                        variant={"outline"}
+                            <div className="flex  items-center justify-between w-full">
+                                <div>
+                                    {saved ? (
+                                        <Button
+                                            variant={"outline"}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleSave();
+                                            }}
+                                        >
+                                            Saved
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleSave();
+                                            }}
+                                        >
+                                            Save
+                                        </Button>
+                                    )}
+                                </div>
+                                <div className="flex space-x-2 items-center">
+                                    <div className="duration-150 hover:scale-110">
+                                        <DownloadButton
+                                            url={parameter?.media.url}
+                                            name={fileName}
+                                        />
+                                    </div>
+                                    <Heart
+                                        size={32}
+                                        className={`${
+                                            liked
+                                                ? "fill-red-500 text-red-600 "
+                                                : " text-red-600"
+                                        } duration-150 cursor-pointer hover:scale-110`}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            handleSave();
+                                            handleLikes();
                                         }}
-                                    >
-                                        Saved
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleSave();
-                                        }}
-                                    >
-                                        Save
-                                    </Button>
-                                )}
-                                <Heart
-                                    className={`${
-                                        liked ? "fill-red-500" : ""
-                                    } duration-150 cursor-pointer`}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleLikes();
-                                    }}
-                                />
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
