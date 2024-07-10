@@ -4,10 +4,6 @@ import { users as usersTable } from "@/db/schema/users";
 import { media as mediaTable } from "@/db/schema/media";
 import { likes as likesTable } from "@/db/schema/likes";
 import { saved as savedTable } from "@/db/schema/saved";
-import { NextRequest, NextResponse } from "next/server";
-import data from "@/components/utility/data";
-import PostContent from "@/components/utility/PostContent";
-import { use } from "react";
 
 export async function getPost() {
     const result = await db

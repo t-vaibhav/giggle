@@ -2,7 +2,6 @@ import Templates from "@/components/utility/Templates";
 import React, { Suspense } from "react";
 import { getLikeStatus, getPost, getPostData } from "./action";
 import ImageLoadingSkeleton from "@/components/utility/ImageLoadingSkeleton";
-import Templates2 from "@/components/utility/Templates2";
 import Spinner from "@/components/utility/Spinner";
 
 export default async function Home() {
@@ -18,7 +17,7 @@ export default async function Home() {
     console.log(postElements);
     return (
         <main className="pt-20 bg-white">
-            <div className="columns-6 gap-3 space-y-3 mx-10 mt-5">
+            <div className="2xl:columns-6 lg:columns-5 md:columns-4 sm:columns-3 columns-2 gap-3 space-y-3 lg:mx-5 xl:mx-10 mx-5">
                 {postElements ? postElements : <Spinner />}
             </div>
         </main>

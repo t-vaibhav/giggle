@@ -77,7 +77,9 @@ export default function Home() {
     const [loading, setLoading] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [mediaLoading, setMediaLoading] = useState<boolean>(false);
-
+    if (session.status === "unauthenticated") {
+        router.push("/please-login");
+    }
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {

@@ -27,7 +27,7 @@ const Search = () => {
                 <input
                     type="text"
                     className="w-full border rounded-full p-2 focus:outline-none outline-none placeholder:text-gray-600 pl-11 text-black text-center"
-                    placeholder="Search your GIFs"
+                    placeholder="Search templates e.g. cricket"
                     onChange={(e) => handleSearch(e.target.value)}
                     defaultValue={searchParams.get("query")?.toString()}
                 />

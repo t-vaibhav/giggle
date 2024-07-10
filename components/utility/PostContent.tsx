@@ -7,13 +7,21 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import DownloadButton from "./DownloadButton";
 import extractFileExtension from "@/utils/extractFileExtension";
+import { useRouter } from "next/navigation";
 
 export default function PostContent({ data }: any) {
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
     const { data: session } = useSession();
+    const ses = useSession();
+    const router = useRouter();
 
     async function fetchLikeStatus() {
+        if (!session?.user) {
+            return {
+                count: 0,
+            };
+        }
         const likeData = {
             userId: session?.user?.id,
             postId: data[0].posts.id,
@@ -51,6 +59,11 @@ export default function PostContent({ data }: any) {
     }
 
     async function fetchSaveStatus() {
+        if (!session?.user) {
+            return {
+                count: 0,
+            };
+        }
         const saveData = {
             userId: session?.user?.id,
             postId: data[0].posts.id,
@@ -88,13 +101,21 @@ export default function PostContent({ data }: any) {
     }
 
     const handleLikes = () => {
-        setLiked(!liked);
-        uploadLike();
+        if (ses.status === "unauthenticated") {
+            router.push("/please-login");
+        } else {
+            setLiked(!liked);
+            uploadLike();
+        }
     };
 
     const handleSave = () => {
-        setSaved(!saved);
-        uploadSave();
+        if (ses.status === "unauthenticated") {
+            router.push("/please-login");
+        } else {
+            setSaved(!saved);
+            uploadSave();
+        }
     };
     // console.log("Dasdad", data);
     console.log(data);
@@ -102,16 +123,13 @@ export default function PostContent({ data }: any) {
         ? "image"
         : "video";
     useEffect(() => {
-        if (session?.user) {
-            (async () => {
-                const likesFlag = await fetchLikeStatus();
-                setLiked(likesFlag.count);
-                const saveFlag = await fetchSaveStatus();
-                setSaved(saveFlag.count);
-                // setLoading(false);
-            })();
-        }
-    }, [session?.user]);
+        (async () => {
+            const likesFlag = await fetchLikeStatus();
+            setLiked(likesFlag.count);
+            const saveFlag = await fetchSaveStatus();
+            setSaved(saveFlag.count);
+        })();
+    });
     let fileName = "giggle_file.";
     fileName += extractFileExtension(data[0]?.media.url);
     return (
@@ -130,9 +148,10 @@ export default function PostContent({ data }: any) {
                         ) : (
                             <video
                                 src={data[0].media.url || "/07.gif"}
-                                className="rounded-xl object-contain max-h-[80vh] mx-auto"
+                                className="rounded-xl object-cover min-h-[80vh] mx-auto"
                                 controls
                                 autoPlay
+                                loop
                             />
                         )}
                     </>

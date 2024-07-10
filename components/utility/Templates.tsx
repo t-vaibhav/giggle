@@ -10,16 +10,24 @@ import ImageLoadingSkeleton from "./ImageLoadingSkeleton";
 import DownloadButton from "./DownloadButton";
 import extractFileExtension from "@/utils/extractFileExtension";
 import Spinner from "./Spinner";
+import { useRouter } from "next/navigation";
 const Templates = ({ parameter }: any) => {
     const [loading, setLoading] = useState(true);
     const [hover, setHover] = useState(false);
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
+    const router = useRouter();
     const { data: session } = useSession();
+    const ses = useSession();
     const blurDataURL =
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBAWpEwv0AAAAASUVORK5CYII=";
 
     async function fetchLikeStatus() {
+        if (!session?.user) {
+            return {
+                count: 0,
+            };
+        }
         const likeData = {
             userId: session?.user?.id,
             postId: parameter.posts.id,
@@ -57,6 +65,11 @@ const Templates = ({ parameter }: any) => {
     }
 
     async function fetchSaveStatus() {
+        if (!session?.user) {
+            return {
+                count: 0,
+            };
+        }
         const saveData = {
             userId: session?.user?.id,
             postId: parameter.posts.id,
@@ -94,26 +107,32 @@ const Templates = ({ parameter }: any) => {
     }
 
     const handleLikes = () => {
-        setLiked(!liked);
-        uploadLike();
+        if (ses.status === "unauthenticated") {
+            router.push("/please-login");
+        } else {
+            setLiked(!liked);
+            uploadLike();
+        }
     };
 
     const handleSave = () => {
-        setSaved(!saved);
-        uploadSave();
+        if (ses.status === "unauthenticated") {
+            router.push("/please-login");
+        } else {
+            setSaved(!saved);
+            uploadSave();
+        }
     };
 
     useEffect(() => {
-        if (session?.user) {
-            (async () => {
-                const likesFlag = await fetchLikeStatus();
-                setLiked(likesFlag.count);
-                const saveFlag = await fetchSaveStatus();
-                setSaved(saveFlag.count);
-                setLoading(false);
-            })();
-        }
-    }, [session?.user]);
+        (async () => {
+            const likesFlag = await fetchLikeStatus();
+            setLiked(likesFlag.count);
+            const saveFlag = await fetchSaveStatus();
+            setSaved(saveFlag.count);
+            setLoading(false);
+        })();
+    });
 
     const typeOfMedia = parameter.media.type.startsWith("image/")
         ? "image"
@@ -150,6 +169,8 @@ const Templates = ({ parameter }: any) => {
                                     width={300}
                                     className="rounded-xl"
                                     autoPlay
+                                    muted
+                                    loop
                                 />
                             )}
                         </>

@@ -38,6 +38,8 @@ export default function SearchCard({ parameter }: any) {
                             width={300}
                             className="rounded-xl"
                             autoPlay
+                            muted
+                            loop
                         />
                     )}
                 </>
