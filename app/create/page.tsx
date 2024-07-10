@@ -190,7 +190,7 @@ export default function Home() {
                                     <Button
                                         variant={"outline"}
                                         onClick={() => {
-                                            router.refresh;
+                                            router.refresh();
                                         }}
                                     >
                                         Upload more
