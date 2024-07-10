@@ -133,9 +133,9 @@ export default function PostContent({ data }: any) {
     let fileName = "giggle_file.";
     fileName += extractFileExtension(data[0]?.media.url);
     return (
-        <div className="pt-20">
-            <div className=" max-w-screen-lg mx-auto shadow-2xl min-h-[80vh] rounded-2xl flex bg-white">
-                <div className="w-full min-h-full bg-black rounded-l-2xl">
+        <div className="pt-20 pb-5">
+            <div className=" max-w-screen-lg lg:mx-auto  mx-6 shadow-2xl h-full md:min-h-[80vh] rounded-2xl flex md:flex-row flex-col bg-white">
+                <div className="w-full min-h-full bg-black rounded-t-2xl md:rounded-l-2xl">
                     <>
                         {typeOfMedia === "image" ? (
                             <Image
@@ -143,12 +143,12 @@ export default function PostContent({ data }: any) {
                                 alt="media"
                                 height={700}
                                 width={400}
-                                className="object-cover h-full w-full rounded-l-2xl"
+                                className="object-cover h-full w-full rounded-t-2xl md:rounded-l-2xl"
                             />
                         ) : (
                             <video
                                 src={data[0].media.url || "/07.gif"}
-                                className="rounded-xl object-cover min-h-[80vh] mx-auto"
+                                className="rounded-xl object-cover min-h-[80vh] mx-auto rounded-t-2xl md:rounded-l-2xl"
                                 controls
                                 autoPlay
                                 loop
@@ -156,26 +156,28 @@ export default function PostContent({ data }: any) {
                         )}
                     </>
                 </div>
-                <div className="w-full p-5 min-h-full  relative ">
+
+                <div className="w-full p-2 md:p-5 min-h-full pb-14  relative ">
                     <div className="max-h-[80vh] overflow-y-auto">
-                        <h3 className="text-3xl font-semibold mb-3">
+                        <h3 className="md:text-3xl text-2xl font-semibold mb-2 md:mb-3">
                             {data[0].posts.title}
                         </h3>
-                        <p className="text-base text-gray-700 overflow-auto">
+                        <p className="md:text-base text-gray-700 overflow-auto max-h-44">
                             {data[0].posts.content}
                         </p>
                     </div>
-                    <div className="flex justify-between absolute bottom-5 left-5 right-5 bg-white ">
+
+                    <div className="flex justify-between absolute md:bottom-5 md:left-5 md:right-5 bottom-2 left-2 right-2 bg-white ">
                         <div className="flex ">
-                            <div className="flex gap-6 text-red-600 items-center justify-between w-full">
+                            <div className="flex gap-3 md:gap-6 text-red-600 items-center justify-between w-full">
                                 <div className="flex space-x-2">
                                     <Heart
                                         className={`${
                                             liked ? "fill-red-500" : ""
-                                        } duration-150 cursor-pointer h-8 w-8 hover:scale-110 `}
+                                        } duration-150 cursor-pointer h-8 w-8 hover:scale-110 md:scale-100 sm:scale-90`}
                                         onClick={handleLikes}
                                     />
-                                    <div className=" hover:scale-110 duration-150">
+                                    <div className=" hover:scale-110 duration-150 md:scale-100 sm:scale-90">
                                         <DownloadButton
                                             url={data[0]?.media.url}
                                             name={fileName}
@@ -187,19 +189,22 @@ export default function PostContent({ data }: any) {
                                     <Button
                                         variant={"outline"}
                                         onClick={handleSave}
-                                        className=""
+                                        className="md:scale-100 scale-90"
                                     >
                                         Saved
                                     </Button>
                                 ) : (
-                                    <Button onClick={handleSave} className="">
+                                    <Button
+                                        onClick={handleSave}
+                                        className="md:scale-100 scale-90"
+                                    >
                                         Save
                                     </Button>
                                 )}
                             </div>
                         </div>
                         <div className="flex gap-4 text-black items-center">
-                            <p className="text-lg">
+                            <p className="text-base md:text-lg ">
                                 by{" "}
                                 <span className="hover:underline duration-100 cursor-pointer underline-offset-1">
                                     <Link
@@ -219,7 +224,7 @@ export default function PostContent({ data }: any) {
                                         "https://files.edgestore.dev/a9niqqui7m8monub/publicFiles/_public/80708256-2cb5-4e52-b3ef-5ae38f39ec35.jpg"
                                     }
                                     alt="user"
-                                    className="rounded-full h-10 w-10 border"
+                                    className="rounded-full h-10 w-10 border md:scale-100 scale-90"
                                     loading="lazy"
                                 />
                             </Link>

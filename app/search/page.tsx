@@ -16,11 +16,13 @@ const Home = async ({
     const query = searchParams?.query || "security";
     console.log("query is here: ", query);
     return (
-        <div className="max-w-screen-xl mx-auto pt-20 ">
+        <div className="max-w-screen-xl md:mx-auto mx-2 pt-20  ">
             <Navbar showSearchBar={false} />
             <Search />
             <div className="flex items-center justify-between gap-1 mb-5">
-                <h1 className="text-4xl font-bold">Search results</h1>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+                    Search results
+                </h1>
             </div>
             <TableData query={query} />
         </div>

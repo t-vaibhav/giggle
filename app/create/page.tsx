@@ -205,12 +205,12 @@ export default function Home() {
                     )}
                 </DialogContent>
             </Dialog>
-            <div className="space-y-3 mt-16 pt-16 max-w-screen-lg mx-auto gap-10">
+            <div className="max-w-screen-lg lg:mx-auto mx-3 md:mx-6  h-full md:min-h-[80vh] rounded-2xl flex md:flex-row flex-col bg-white mt-16 pt-4 md:pt-16">
                 <div className="w-full">
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
-                            className="space-y-8 flex justify-between gap-10"
+                            className=" md:space-y-8 flex justify-between gap-5 md:gap-10 md:flex-row flex-col"
                         >
                             <div className="w-full">
                                 <FormField
@@ -264,7 +264,7 @@ export default function Home() {
                                                         htmlFor="upload"
                                                         className="col-span-4"
                                                     >
-                                                        <div className="w-full h-[400px] bg-[#e8e9e8] flex items-center justify-center rounded-3xl border-2 border-gray-400 border-dashed cursor-pointer">
+                                                        <div className="w-full h-[300px] md:h-[400px] bg-[#e8e9e8] flex items-center justify-center rounded-3xl border-2 border-gray-400 border-dashed cursor-pointer">
                                                             {mediaLoading ? (
                                                                 <Spinner />
                                                             ) : fileUrl ? (
@@ -329,7 +329,8 @@ export default function Home() {
                                 />
                                 <Progress className="h-2 mt-4" value={val} />
                             </div>
-                            <div className="space-y-8 w-full">
+
+                            <div className="space-y-5 w-full">
                                 <FormField
                                     control={form.control}
                                     name="title"

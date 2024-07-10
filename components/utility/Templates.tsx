@@ -179,7 +179,7 @@ const Templates = ({ parameter }: any) => {
                     <div
                         className={`${
                             hover ? "bg-black/60" : "hidden"
-                        } h-full w-full absolute duration-100 ease-in-out overflow flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-2 z-0 cursor-pointer`}
+                        } h-full w-full absolute duration-100 ease-in-out overflow flex flex-col justify-between top-0 left-0 right-0 bottom-0 rounded-lg p-1 sm:p-2 z-0 cursor-pointer`}
                         onClick={() =>
                             window.open(`/post/${parameter.posts?.id}` || "/")
                         }
@@ -188,10 +188,10 @@ const Templates = ({ parameter }: any) => {
                             className="flex justify-end z-10 w-full"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="flex gap-2 text-white items-center">
-                                <p>
+                            <div className="flex gap-1 sm:gap-2 text-white items-center">
+                                <p className="sm:text-base text-xs ">
                                     by{" "}
-                                    <span className="hover:underline duration-100 cursor-pointer underline-offset-1 z-10">
+                                    <span className="hover:underline duration-100 cursor-pointer underline-offset-1 z-10 sm:text-base text-xs ">
                                         <Link
                                             href={
                                                 `/${parameter.user?.name}` ||
@@ -203,7 +203,7 @@ const Templates = ({ parameter }: any) => {
                                         </Link>
                                     </span>
                                 </p>
-                                <div className="z-10">
+                                <div className="z-10 sm:scale-100  min-h-6 min-w-6">
                                     <Link
                                         href={`/${parameter.user?.name}` || "/"}
                                         target="_blank"
@@ -213,7 +213,7 @@ const Templates = ({ parameter }: any) => {
                                             width={40}
                                             src={parameter.user.image}
                                             alt="user"
-                                            className="rounded-full h-8 w-8 border"
+                                            className="rounded-full h-6 sm:h-8 w-6 sm:w-8 border"
                                             loading="lazy"
                                         />
                                     </Link>
@@ -222,7 +222,7 @@ const Templates = ({ parameter }: any) => {
                         </div>
 
                         <div
-                            className="flex justify-end"
+                            className="flex justify-end   w-full "
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="flex  items-center justify-between w-full">
@@ -234,6 +234,7 @@ const Templates = ({ parameter }: any) => {
                                                 e.stopPropagation();
                                                 handleSave();
                                             }}
+                                            className="sm:scale-100 scale-75"
                                         >
                                             Saved
                                         </Button>
@@ -243,13 +244,14 @@ const Templates = ({ parameter }: any) => {
                                                 e.stopPropagation();
                                                 handleSave();
                                             }}
+                                            className="sm:scale-100 scale-75"
                                         >
                                             Save
                                         </Button>
                                     )}
                                 </div>
-                                <div className="flex space-x-2 items-center">
-                                    <div className="duration-150 hover:scale-110">
+                                <div className="flex sm:space-x-2 items-center">
+                                    <div className="duration-150 hover:scale-110 sm:scale-100 scale-75">
                                         <DownloadButton
                                             url={parameter?.media.url}
                                             name={fileName}
@@ -261,7 +263,7 @@ const Templates = ({ parameter }: any) => {
                                             liked
                                                 ? "fill-red-500 text-red-600 "
                                                 : " text-red-600"
-                                        } duration-150 cursor-pointer hover:scale-110`}
+                                        } duration-150 cursor-pointer hover:scale-110 sm:scale-100 scale-75`}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleLikes();

@@ -17,7 +17,7 @@ export default async function Home() {
     console.log(postElements);
     return (
         <main className="pt-20 bg-white">
-            <div className="2xl:columns-6 lg:columns-5 md:columns-4 sm:columns-3 columns-2 gap-3 space-y-3 lg:mx-5 xl:mx-10 mx-5">
+            <div className="2xl:columns-6 lg:columns-5 md:columns-4 sm:columns-3 columns-2 gap-3 space-y-3 lg:mx-5 xl:mx-10 mx-2 sm:mx-5">
                 {postElements ? postElements : <Spinner />}
             </div>
         </main>

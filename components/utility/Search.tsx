@@ -23,10 +23,10 @@ const Search = () => {
 
     return (
         <>
-            <div className="basis-auto grow shrink relative flex flex-1 my-5">
+            <div className="basis-auto grow shrink relative flex flex-1 mb-5 mt-0 md:my-5">
                 <input
                     type="text"
-                    className="w-full border rounded-full p-2 focus:outline-none outline-none placeholder:text-gray-600 pl-11 text-black text-center"
+                    className="w-full border rounded-full p-2 focus:outline-none outline-none placeholder:text-gray-600 pl-11 text-black  sm:text-center"
                     placeholder="Search templates e.g. cricket"
                     onChange={(e) => handleSearch(e.target.value)}
                     defaultValue={searchParams.get("query")?.toString()}
