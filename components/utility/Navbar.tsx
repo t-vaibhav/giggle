@@ -92,7 +92,7 @@ export default function Navbar({ showSearchBar = true }: Props) {
                         className="cursor-pointer font-bold text-lg"
                         strokeWidth={3}
                         onClick={() => {
-                            toggleMenu();
+                            isMenuOpen ? toggleMenu() : null;
                             handleClick();
                         }}
                     />

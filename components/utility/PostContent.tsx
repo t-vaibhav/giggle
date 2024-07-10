@@ -203,8 +203,8 @@ export default function PostContent({ data }: any) {
                                 )}
                             </div>
                         </div>
-                        <div className="flex gap-4 text-black items-center">
-                            <p className="text-base md:text-lg ">
+                        <div className="flex gap-1 md:gap-4 text-black items-center">
+                            <p className="text-sm md:text-lg ">
                                 by{" "}
                                 <span className="hover:underline duration-100 cursor-pointer underline-offset-1">
                                     <Link
@@ -224,7 +224,7 @@ export default function PostContent({ data }: any) {
                                         "https://files.edgestore.dev/a9niqqui7m8monub/publicFiles/_public/80708256-2cb5-4e52-b3ef-5ae38f39ec35.jpg"
                                     }
                                     alt="user"
-                                    className="rounded-full h-10 w-10 border md:scale-100 scale-90"
+                                    className="rounded-full h-10 w-10 border md:scale-100 scale-75"
                                     loading="lazy"
                                 />
                             </Link>
