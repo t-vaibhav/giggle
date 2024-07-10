@@ -1,6 +1,7 @@
 //components\search.tsx
 "use client";
 
+import { SearchIcon } from "lucide-react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce"; //npm i use-debounce https://www.npmjs.com/package/use-debounce
 
@@ -21,15 +22,23 @@ const Search = () => {
     }, 300);
 
     return (
-        <div className="relative flex flex-1 mb-5 ml-5 mr-5 ">
-            <input
-                type="text"
-                className="input input-bordered input-accent w-full border-2 p-2"
-                placeholder="Search..."
-                onChange={(e) => handleSearch(e.target.value)}
-                defaultValue={searchParams.get("query")?.toString()}
-            />
-        </div>
+        <>
+            <div className="basis-auto grow shrink relative flex flex-1 my-5">
+                <input
+                    type="text"
+                    className="w-full border rounded-full p-2 focus:outline-none outline-none placeholder:text-gray-600 pl-11 text-black text-center"
+                    placeholder="Search your GIFs"
+                    onChange={(e) => handleSearch(e.target.value)}
+                    defaultValue={searchParams.get("query")?.toString()}
+                />
+                <div className="absolute left-0 top-0 bottom-0 flex items-center ml-3">
+                    <SearchIcon
+                        className="text-primary cursor-pointer font-bold text-lg"
+                        strokeWidth={3}
+                    />
+                </div>
+            </div>
+        </>
     );
 };
 

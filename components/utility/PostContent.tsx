@@ -1,3 +1,4 @@
+"use client";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -96,6 +97,7 @@ export default function PostContent({ data }: any) {
         uploadSave();
     };
     // console.log("Dasdad", data);
+    console.log(data);
     const typeOfMedia = data[0].media.type.startsWith("image/")
         ? "image"
         : "video";

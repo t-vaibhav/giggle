@@ -13,8 +13,15 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LoginButton from "./LoginButton";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+    const router = useRouter();
+    const handleClick = () => {
+        setTimeout(() => {
+            router.push("/search");
+        }, 200);
+    };
     return (
         <div className="h-16 flex justify-between bg-primary-foreground items-center px-20  shadow-sm space-x-8 border-b-2 fixed top-0 left-0 right-0 z-50">
             <div className="cursor-pointer">
@@ -47,16 +54,21 @@ export default function Navbar() {
                     </Link>
                 </ul>
             </div>
-            <div className="basis-auto grow shrink relative">
+            <div
+                className="basis-auto grow shrink relative"
+                onClick={handleClick}
+            >
                 <input
                     type="text"
-                    className="w-full border rounded-full p-2 focus:outline-none outline-none placeholder:text-gray-600 pl-11 text-black "
+                    className="w-full border rounded-full p-2 focus:outline-none outline-none placeholder:text-gray-600 pl-11 text-black"
                     placeholder="Search your GIFs"
+                    onClick={handleClick}
                 />
                 <div className="absolute left-0 top-0 bottom-0 flex items-center ml-3">
                     <Search
                         className="text-primary cursor-pointer font-bold text-lg"
                         strokeWidth={3}
+                        onClick={handleClick}
                     />
                 </div>
             </div>

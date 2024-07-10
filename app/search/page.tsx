@@ -13,9 +13,9 @@ const Home = async ({
     };
 }) => {
     const query = searchParams?.query || "security";
-    console.log("quesry is here: ", query);
+    console.log("query is here: ", query);
     return (
-        <div className="max-w-screen-xl mx-auto py-20 ">
+        <div className="max-w-screen-xl mx-auto pt-10 ">
             <Search />
             <div className="flex items-center justify-between gap-1 mb-5">
                 <h1 className="text-4xl font-bold">Search results</h1>

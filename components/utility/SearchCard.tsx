@@ -32,12 +32,12 @@ export default function SearchCard({ parameter }: any) {
                             className="rounded-xl"
                         />
                     ) : (
-                        <Image
+                        <video
                             src={parameter.media.url || "/07.gif"}
-                            alt="media"
                             height={500}
                             width={300}
                             className="rounded-xl"
+                            autoPlay
                         />
                     )}
                 </>

@@ -9,13 +9,19 @@ const TableData = async ({ query }: { query: string }) => {
 
     return (
         <>
-            <div className="columns-5">
-                {data.map((item, index) => (
-                    <div key={index} className="mb-10">
-                        <SearchCard parameter={item} />
-                    </div>
-                ))}
-            </div>
+            {data.length === 0 ? (
+                <div className="text-center min-h-[50vh] flex items-center justify-center">
+                    <p>No results found.</p>
+                </div>
+            ) : (
+                <div className="columns-5 gap-5">
+                    {data.map((item, index) => (
+                        <div key={index} className="">
+                            <SearchCard parameter={item} />
+                        </div>
+                    ))}
+                </div>
+            )}
         </>
     );
 };
