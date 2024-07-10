@@ -176,3 +176,23 @@ export async function getExplorePostData({ id }: { id: number }) {
         return { error: "Post not found", found: false, status: 404 };
     }
 }
+
+export async function deletePost({ id }: { id: number }) {
+    if (!id) {
+        return { error: "id is required", status: 404 };
+    }
+    try {
+        const result = await db
+            .select()
+            .from(postsTable)
+            .innerJoin(mediaTable, eq(mediaTable.id, postsTable.mediaId))
+            .innerJoin(savedTable, eq(postsTable.id, savedTable.postId))
+            .where(eq(postsTable.id, id));
+        return {
+            result,
+        };
+    } catch (error) {
+        console.error(error);
+        return { error: "Post not found", found: false, status: 404 };
+    }
+}

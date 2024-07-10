@@ -163,7 +163,7 @@ export default function Home() {
                 <DialogTrigger asChild>
                     <div></div>
                 </DialogTrigger>
-                <DialogContent className="min-h-[40vh] sm:w-full w-[90vw] mx-5 flex items-center justify-center flex-col text-black custom-dialog-content">
+                <DialogContent className="min-h-[40vh] sm:w-full w-[90vw] flex items-center justify-center flex-col text-black custom-dialog-content sm:p-0 p-3">
                     <DialogTitle></DialogTitle>
                     {loading ? (
                         <>
@@ -190,7 +190,7 @@ export default function Home() {
                                     <Button
                                         variant={"outline"}
                                         onClick={() => {
-                                            router.push("/create");
+                                            router.refresh;
                                         }}
                                     >
                                         Upload more
@@ -315,10 +315,7 @@ export default function Home() {
                                                                     <Upload className="mx-auto" />
                                                                     <h1 className="px-4 text-center text-sm leading-tight pt-2">
                                                                         Choose a
-                                                                        file or
-                                                                        drag and
-                                                                        drop it
-                                                                        here
+                                                                        file
                                                                     </h1>
                                                                 </div>
                                                             )}
