@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LoginButton from "./LoginButton";
 import { useRouter } from "next/navigation";
+import LoginButton2 from "./LoginButtonPhone";
 
 interface Props {
     showSearchBar?: boolean;
@@ -125,6 +126,9 @@ export default function Navbar({ showSearchBar = true }: Props) {
                     <Link href="/create" onClick={toggleMenu}>
                         <li className=" rounded-3xl">Create</li>
                     </Link>
+                    <li className="flex justify-end">
+                        <LoginButton2 />
+                    </li>
                 </ul>
             </div>
         </div>

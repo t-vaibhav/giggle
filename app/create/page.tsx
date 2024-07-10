@@ -163,43 +163,46 @@ export default function Home() {
                 <DialogTrigger asChild>
                     <div></div>
                 </DialogTrigger>
-                <DialogContent className="min-h-[40vh] w-full flex items-center justify-center flex-col text-black custom-dialog-content">
+                <DialogContent className="min-h-[40vh] sm:w-full w-[90vw] mx-5 flex items-center justify-center flex-col text-black custom-dialog-content">
                     <DialogTitle></DialogTitle>
                     {loading ? (
                         <>
                             <Spinner size="16" />
-                            <h6 className="text-3xl t mt-4 font-semibold">
+                            <h6 className="text-2xl md:text-3xl  font-semibold">
                                 Creating your post...
                             </h6>
                         </>
                     ) : (
                         <>
-                            <Image
-                                src={"/done.gif"}
-                                height={100}
-                                width={100}
-                                alt="done"
-                            />
-                            <h6 className="text-3xl font-semibold text-center">
-                                Congratulations! You have successfully created
-                                your post
-                            </h6>
-                            <div className="flex justify-around gap-10 mt-5">
-                                <Button
-                                    variant={"outline"}
-                                    onClick={() => {
-                                        setDialogOpen(false);
-                                    }}
-                                >
-                                    Upload more
-                                </Button>
-                                <Button
-                                    onClick={() => {
-                                        router.push("/explore");
-                                    }}
-                                >
-                                    Explore templates
-                                </Button>
+                            <div className="p-10">
+                                <Image
+                                    src={"/done.gif"}
+                                    height={100}
+                                    width={100}
+                                    alt="done"
+                                    className="mx-auto"
+                                />
+                                <h6 className="text-2xl md:text-3xl font-semibold text-center">
+                                    Congratulations! You have successfully
+                                    created your post
+                                </h6>
+                                <div className="flex justify-around gap-10 mt-5">
+                                    <Button
+                                        variant={"outline"}
+                                        onClick={() => {
+                                            router.push("/create");
+                                        }}
+                                    >
+                                        Upload more
+                                    </Button>
+                                    <Button
+                                        onClick={() => {
+                                            router.push("/");
+                                        }}
+                                    >
+                                        Explore templates
+                                    </Button>
+                                </div>
                             </div>
                         </>
                     )}
