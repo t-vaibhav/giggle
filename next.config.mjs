@@ -23,5 +23,5 @@ const nextConfig = {
         ],
     },
 };
-
+export const fetchCache = "force-no-store";
 export default nextConfig;
